@@ -1,23 +1,18 @@
-"use strict";
-// Importa el modulo 'mongoose' para crear la conexion a la base de datos
-const mongoose = require("mongoose");
-const ROLES = require("../constants/roles.constants");
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../database/database.js'); // Importa la instancia de Sequelize
 
-// Crea el esquema de la coleccion 'roles'
-const roleSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      enum: ROLES,
-      required: true,
-    },
-  },
-  {
-    versionKey: false,
-  },
-);
+// Asegúrate de que la ruta es correcta
 
-// Crea el modelo de datos 'Role' a partir del esquema 'roleSchema'
-const Role = mongoose.model("Role", roleSchema);
+const Role = sequelize.define('Role', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  }
+}, {
+  tableName: 'roles'
+});
+
+
 
 module.exports = Role;

@@ -11,11 +11,15 @@ require("dotenv").config({ path: envFilePath });
 const PORT = process.env.PORT;
 /** Host del servidor */
 const HOST = process.env.HOST;
-/** URL de la base de datos */
-const DB_URL = process.env.DB_URL;
+/** Usuario de la base de datos */
+const DB_USER = process.env.DB_USER;
+/** Contraseña de la base de datos */
+const DB_PASSWORD = process.env.DB_PASSWORD;
+/** Nombre de la base de datos */
+const DB_NAME = process.env.DB_NAME;
 /** Secreto para el token de acceso */
 const ACCESS_JWT_SECRET = process.env.ACCESS_JWT_SECRET;
 /** Secreto para el token de refresco */
 const REFRESH_JWT_SECRET = process.env.REFRESH_JWT_SECRET;
 
-module.exports = { PORT, HOST, DB_URL, ACCESS_JWT_SECRET, REFRESH_JWT_SECRET };
+module.exports = { PORT, HOST, DB_USER, DB_PASSWORD, DB_NAME, ACCESS_JWT_SECRET, REFRESH_JWT_SECRET };

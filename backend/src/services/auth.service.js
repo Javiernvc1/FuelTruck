@@ -1,8 +1,5 @@
 "use strict";
 
-/** Modelo de datos 'User' */
-const User = require("../models/user.model.js");
-
 /** Modulo 'jsonwebtoken' para crear tokens */
 const jwt = require("jsonwebtoken");
 
@@ -12,7 +9,13 @@ const {
 } = require("../config/configEnv.js");
 
 const { handleError } = require("../utils/errorHandler");
+const User = require("../models/user.model");
+const Role = require("../models/role.model");
+const bcrypt = require('bcryptjs');
 
+async function comparePassword(userPassword, dbPassword) {
+  return await bcrypt.compare(userPassword, dbPassword);
+}
 /**
  * Inicia sesión con un usuario.
  * @async
@@ -20,27 +23,31 @@ const { handleError } = require("../utils/errorHandler");
  * @param {Object} user - Objeto de usuario
  */
 async function login(user) {
+  console.log(user);
   try {
     const { email, password } = user;
 
-    const userFound = await User.findOne({ email: email })
-      .populate("roles")
-      .exec();
+    const userFound = await User.findOne({
+      where: { email },
+    });
+    //console.log(userFound);
     if (!userFound) {
       return [null, null, "El usuario y/o contraseña son incorrectos"];
     }
 
-    const matchPassword = await User.comparePassword(
-      password,
-      userFound.password,
-    );
-
+    // Aquí debes implementar tu propia función para comparar contraseñas
+    const matchPassword = await comparePassword(password, userFound.password);
+    console.log(matchPassword, password, userFound.password);
     if (!matchPassword) {
       return [null, null, "El usuario y/o contraseña son incorrectos"];
     }
 
+    //const roles = userFound.roles.map(role => role.name); 
+    
+    const roles = [userFound.roleId];
+    console.log(roles);
     const accessToken = jwt.sign(
-      { email: userFound.email, roles: userFound.roles },
+      { email: userFound.email, roles },
       ACCESS_JWT_SECRET,
       {
         expiresIn: "1d",
@@ -78,16 +85,22 @@ async function refresh(cookies) {
       async (err, user) => {
         if (err) return [null, "La sesion a caducado, vuelva a iniciar sesion"];
 
-        const userFound = await User.findOne({
-          email: user.email,
-        })
-          .populate("roles")
-          .exec();
+        const userFound = await User.findOne({ 
+          where: { email: user.email },
+          include: {
+            model: Role,
+            attributes: ['name']
+          }
+        });
 
-        if (!userFound) return [null, "No usuario no autorizado"];
+        if (!userFound) {
+          return [null, "No usuario no autorizado"];
+        }
+
+        const roles = userFound.roles.map(role => role.name);
 
         const accessToken = jwt.sign(
-          { email: userFound.email, roles: userFound.roles },
+          { email: userFound.email, roles },
           ACCESS_JWT_SECRET,
           {
             expiresIn: "1d",

@@ -1,49 +1,45 @@
-"use strict";
-// Importa el modulo 'mongoose' para crear la conexion a la base de datos
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../database/database.js');
+const bcrypt = require('bcryptjs');
+const Role = require('./role.model');
 
-// Crea el esquema de la coleccion 'usuarios'
-const userSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role",
-      },
-    ],
+// Define el modelo 'User'
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
-  {
-    versionKey: false,
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
-);
+  rut: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  roleId: {
+    type: DataTypes.STRING,
+    references: {
+      model: Role, // 'Roles' would also work
+      key: 'name'
+    }
+  }
+}, {
+  tableName: 'users',
+  hooks: {
+    beforeCreate: async (user) => {
+      const salt = await bcrypt.genSalt();
+      user.password = await bcrypt.hash(user.password, salt);
+    }
+  }
+});
 
-/** Encripta la contraseña del usuario */
-userSchema.statics.encryptPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10);
-  return await bcrypt.hash(password, salt);
-};
 
-/** Compara la contraseña del usuario */
-userSchema.statics.comparePassword = async (password, receivedPassword) => {
-  return await bcrypt.compare(password, receivedPassword);
-};
 
-/** Modelo de datos 'User' */
-const User = mongoose.model("User", userSchema);
-
-// Exporta el modelo de datos 'User'
 module.exports = User;

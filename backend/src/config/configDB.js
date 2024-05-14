@@ -1,31 +1,48 @@
+// configDB.js
 "use strict";
-// Importa el modulo 'mongoose' para crear la conexion a la base de datos
-const mongoose = require("mongoose");
 
-// Agregamos la configuracion de las variables de entorno
-const { DB_URL } = require("./configEnv.js");
+const Sequelize = require('sequelize');
+const { DB_USER, DB_PASSWORD, DB_NAME, HOST, PORT } = require("./configEnv.js");
 const { handleError } = require("../utils/errorHandler");
+const User = require('../models/user.model.js');
+const Role = require('../models/role.model.js');
+const Camion = require('../models/camion.model.js');
+const Servicentro = require('../models/Servicentro.model.js');
+const Ciudad = require('../models/Ciudad.model.js');
+const Empresa = require('../models/Empresa.model.js');
+const Factura = require('../models/factura.model.js');
+const Region = require('../models/region.model.js');
+const tipocarga = require('../models/tipocarga.model.js');
+const Viaje = require('../models/viajes.model.js');
 
-/**  Opciones de configuracion para la conexion a la base de datos */
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
 
-/**
- * Establece la conexión con la base de datos.
- * @async
- * @function setupDB
- * @throws {Error} Si no se puede conectar a la base de datos.
- * @returns {Promise<void>} Una promesa que se resuelve cuando se establece la conexión con la base de datos.
- */
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: HOST,
+  dialect: 'postgres',
+});
+
 async function setupDB() {
   try {
-    await mongoose.connect(DB_URL, options);
+    await sequelize.authenticate();
     console.log("=> Conectado a la base de datos");
+
+    // Sincroniza los modelos con la base de datos
+    await User.sync();
+    await Role.sync();
+    await Camion.sync();
+    await Servicentro.sync();
+    await Ciudad.sync();
+    await Empresa.sync();
+    await Factura.sync();
+    await Viaje.sync();
+    await Region.sync();
+    await tipocarga.sync();
+    
+    
+    console.log('Database synced');
   } catch (err) {
     handleError(err, "/configDB.js -> setupDB");
   }
 }
 
-module.exports = { setupDB };
+module.exports = { setupDB, sequelize };
