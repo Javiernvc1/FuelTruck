@@ -35,8 +35,8 @@ async function setupDB() {
     await Ciudad.sync();
     await Empresa.sync();
     await Factura.sync();
-    await tipocarga.sync();
     await Viaje.sync();
+    await tipocarga.sync();
     
     console.log('Database synced');
   } catch (err) {
