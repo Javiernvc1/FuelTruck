@@ -34,10 +34,9 @@ async function setupDB() {
     await Ciudad.sync();
     await Empresa.sync();
     await Factura.sync();
-    await Viaje.sync();
     await Region.sync();
     await tipocarga.sync();
-    
+    await Viaje.sync();
     
     console.log('Database synced');
   } catch (err) {
