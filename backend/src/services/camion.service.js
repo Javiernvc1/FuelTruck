@@ -5,12 +5,7 @@ const User = require('../models/user.model.js');
 
 async function getCamiones() {
     try {
-        const camiones = await Camion.findAll({
-            include: {
-                model: User,
-                attributes: ['username']
-            }
-        });
+        const camiones = await Camion.findAll({});
 
         if (!camiones) return [null, "No hay camiones"];
 
@@ -42,12 +37,7 @@ async function createCamion(camion) {
 
 async function getCamionById(patente) {
     try {
-        const camion = await Camion.findByPk(patente, {
-            include: {
-                model: User,
-                attributes: ['username']
-            }
-        });
+        const camion = await Camion.findByPk(patente, {});
 
         if (!camion) return [null, "El camión no existe"];
 
