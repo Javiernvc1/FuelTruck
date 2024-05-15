@@ -31,10 +31,10 @@ async function setupDB() {
     await User.sync();
     await Camion.sync();
     await Servicentro.sync();
+    await Region.sync();
     await Ciudad.sync();
     await Empresa.sync();
     await Factura.sync();
-    await Region.sync();
     await tipocarga.sync();
     await Viaje.sync();
     
