@@ -12,8 +12,8 @@ async function createRoles() {
     if (count > 0) return;
 
     await Role.bulkCreate([
-      { name: 'user' },
-      { name: 'admin' }
+      { name: 'Conductor' },
+      { name: 'Administrador' }
     ]);
 
     console.log("* => Roles creados exitosamente");
@@ -28,16 +28,16 @@ async function createUsers() {
     if (count > 0) return;
 
     const roles = await Role.findAll();
-    const userRole = roles.find(role => role.name === 'user').name;
-    const adminRole = roles.find(role => role.name === 'admin').name;
+    const userRole = roles.find(role => role.name === 'Conductor').name;
+    const adminRole = roles.find(role => role.name === 'Administrador').name;
 
     const userPassword = await hashPassword('user123');
     const adminPassword = await hashPassword('admin123');
 
 
     await User.bulkCreate([
-      { username: 'user', email: 'user@email.com', password: userPassword, rut: '1.111.111-1', roleId: userRole },
-      { username: 'admin', email: 'admin@email.com', password: adminPassword,rut: '2.222.222-2', roleId: adminRole }
+      { nombre: 'user', apellido: '',email: 'user@email.com', password: userPassword, rut: '1.111.111-1', roleId: userRole },
+      { nombre: 'admin', apellido: '', email: 'admin@email.com', password: adminPassword,rut: '2.222.222-2', roleId: adminRole }
     ]);
 
     console.log("* => Users creados exitosamente");

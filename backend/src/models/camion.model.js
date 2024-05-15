@@ -17,10 +17,10 @@ const Camion = sequelize.define('Camion', {
     allowNull: false
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     references: {
       model: User, // 'Users' would also work
-      key: 'id'
+      key: 'rut'
     }
   }
 }, {

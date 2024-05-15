@@ -21,7 +21,7 @@ async function isAdmin(req, res, next) {
 
     const roles = [user.roleId];
 
-    if (roles.includes("admin")) {
+    if (roles.includes("Administrador")) {
       next();
       return;
     }

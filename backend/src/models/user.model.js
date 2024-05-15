@@ -5,7 +5,11 @@ const Role = require('./role.model');
 
 // Define el modelo 'User'
 const User = sequelize.define('User', {
-  username: {
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  apellido: {
     type: DataTypes.STRING,
     allowNull: false
   },

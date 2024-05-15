@@ -3,14 +3,16 @@ const User = require("../models/user.model");
 const Role = require("../models/role.model");
 const { Op } = require("sequelize");
 const { handleError } = require("../utils/errorHandler");
+const bcrypt = require('bcryptjs');
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+}
 
 async function getUsers() {
   try {
     const users = await User.findAll({
-      include: {
-        model: Role,
-        attributes: ['name']
-      }
+      attributes: ['id', 'nombre', 'apellido', 'email', 'rut', 'roleId'] 
     });
 
     if (!users) return [null, "No hay usuarios"];
@@ -23,37 +25,37 @@ async function getUsers() {
 
 async function createUser(user) {
   try {
-    const { username, email, password, roles } = user;
+    const { nombre, apellido, email, rut, password, roleId } = user;
 
     const userFound = await User.findOne({ where: { email } });
     if (userFound) return [null, "El usuario ya existe"];
 
-    const roleFound = await Role.findOne({ where: { name: roles } });
+    const roleFound = await Role.findOne({ where: { name: roleId } });
     if (!roleFound) return [null, "El rol no existe"];
 
     // Aquí asumimos que tienes una función para encriptar contraseñas
-    const encryptedPassword = await encryptPassword(password);
+    const encryptedPassword = await hashPassword(password);
 
-    await User.create({
-      username,
+    const newUser = await User.create({
+      nombre,
+      apellido,
       email,
+      rut,
       password: encryptedPassword,
-      roleId: roleFound.id
+      roleId: roleFound.name
     });
 
-    return [null, "Usuario creado exitosamente"];
+    return [newUser, null];
   } catch (error) {
     handleError(error, "user.service -> createUser");
   }
 }
 
 async function getUserById(id) {
+  console.log(id);
   try {
     const user = await User.findByPk(id, {
-      include: {
-        model: Role,
-        attributes: ['name']
-      }
+      attributes: ['id', 'nombre', 'apellido', 'email', 'rut', 'roleId']
     });
 
     if (!user) return [null, "El usuario no existe"];
@@ -66,7 +68,7 @@ async function getUserById(id) {
 
 async function updateUser(id, user) {
   try {
-    const { username, email, password, newPassword, roles } = user;
+    const { nombre, apellido, email, rut, password, newPassword, roles } = user;
 
     const userFound = await User.findByPk(id);
     if (!userFound) return [null, "El usuario no existe"];
@@ -79,11 +81,13 @@ async function updateUser(id, user) {
     if (!roleFound) return [null, "El rol no existe"];
 
     // Aquí asumimos que tienes una función para encriptar contraseñas
-    const encryptedPassword = await encryptPassword(newPassword || password);
+    const encryptedPassword = await hashPassword(newPassword || password);
 
     await userFound.update({
-      username,
+      nombre,
+      apellido,
       email,
+      rut,
       password: encryptedPassword,
       roleId: roleFound.id
     });
