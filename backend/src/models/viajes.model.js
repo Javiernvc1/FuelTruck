@@ -4,7 +4,7 @@ const { sequelize } = require('../database/database.js');
 const Empresa = require('./Empresa.model.js');
 const User = require('./user.model.js');
 const Camion = require('./camion.model.js');
-
+const TipoCarga = require('./tipocarga.model.js');
 
 const Viaje = sequelize.define('Viaje', {
   id_viaje: {
@@ -16,10 +16,7 @@ const Viaje = sequelize.define('Viaje', {
     type: DataTypes.DATE,
     allowNull: false
   },
-  tipo_carga: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
+
   distancia: {
     type: DataTypes.FLOAT,
     allowNull: false
@@ -31,6 +28,13 @@ const Viaje = sequelize.define('Viaje', {
   combustible_final: {
     type: DataTypes.FLOAT,
     allowNull: false
+  },
+  tipo_cargaId: {
+    type: DataTypes.STRING,
+    references: {
+      model: TipoCarga,
+      key: 'nombre'
+    }
   },
   empresaId: {
     type: DataTypes.INTEGER,

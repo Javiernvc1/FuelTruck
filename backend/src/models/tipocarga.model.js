@@ -12,13 +12,6 @@ const TipoCarga = sequelize.define('TipoCarga', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    viajeId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Viajes,
-            key: 'id_viaje'
-        }
-    }
     }, {
     tableName: 'tipo_carga'
 });
