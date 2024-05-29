@@ -10,6 +10,7 @@ const TipoCarga = sequelize.define('TipoCarga', {
     },
     nombre: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
     },
     }, {

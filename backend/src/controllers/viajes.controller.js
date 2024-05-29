@@ -3,6 +3,13 @@
 const { handleError } = require("../utils/errorHandler");
 const ViajeService = require('../services/viajes.service');
 const { respondSuccess, respondError } = require("../utils/resHandler");
+const fs = require('fs');
+
+// Función para convertir una imagen a base64
+function imageBase64(file) {
+    const image = fs.readFileSync(file.path);
+    return Buffer.from(image).toString('base64');
+}
 
 async function getViajes(req, res) {
     try {
@@ -20,8 +27,10 @@ async function getViajes(req, res) {
 
 async function createViaje(req, res) {
     try {
-        const { body } = req;
-        const [newViaje, errorViaje] = await ViajeService.createViaje(body);
+        const { body, files } = req;
+        const combustible_inicio_base64 = imageToBase64(files.combustible_inicio[0]);
+        const combustible_final_base64 = imageToBase64(files.combustible_final[0]);
+        const [newViaje, errorViaje] = await ViajeService.createViaje({ ...body, combustible_inicio: combustible_inicio_base64, combustible_final: combustible_final_base64 });
 
         if (errorViaje) return respondError(req, res, 400, errorViaje);
         if (!newViaje) {
