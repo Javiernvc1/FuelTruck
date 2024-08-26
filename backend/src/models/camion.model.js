@@ -16,6 +16,10 @@ const Camion = sequelize.define('Camion', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  gasto_medio: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
   userId: {
     type: DataTypes.STRING,
     references: {

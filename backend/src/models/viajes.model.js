@@ -16,17 +16,24 @@ const Viaje = sequelize.define('Viaje', {
     type: DataTypes.DATE,
     allowNull: false
   },
-
   distancia: {
     type: DataTypes.FLOAT,
     allowNull: false
   },
-  combustible_inicio: {
+  odometro_inicio: {
     type: DataTypes.FLOAT,
     allowNull: false
   },
-  combustible_final: {
+  odometro_final: {
     type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  combustible_inicio: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  combustible_final: {
+    type: DataTypes.TEXT,
     allowNull: false
   },
   tipo_cargaId: {
