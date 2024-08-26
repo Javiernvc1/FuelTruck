@@ -37,7 +37,9 @@ async function setupDB() {
     await Factura.sync();
     await tipocarga.sync();
     await Viaje.sync();
+
     await Notificacion.sync();
+
     console.log('Database synced');
   } catch (err) {
     handleError(err, "/configDB.js -> setupDB");
