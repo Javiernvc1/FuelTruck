@@ -14,7 +14,7 @@ const Factura = require('../models/factura.model.js');
 const Region = require('../models/region.model.js');
 const tipocarga = require('../models/tipocarga.model.js');
 const Viaje = require('../models/viajes.model.js');
-
+const Notificacion = require('../models/notificacion.model.js');
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: HOST,
@@ -37,6 +37,8 @@ async function setupDB() {
     await Factura.sync();
     await tipocarga.sync();
     await Viaje.sync();
+
+    await Notificacion.sync();
 
     console.log('Database synced');
   } catch (err) {

@@ -3,6 +3,9 @@ const { handleError } = require("../utils/errorHandler");
 const Viaje = require('../models/viajes.model.js');
 const nodemailer = require('nodemailer');
 const Camion = require('../models/camion.model.js');
+const Notificacion = require('../models/notificacion.model.js');
+
+
 async function getViajes() {
     try {
         const viajes = await Viaje.findAll();
@@ -134,8 +137,16 @@ async function checkForIrregularities(id_viaje) {
         const distancia_real = viaje.odometro_final - viaje.odometro_inicio;
 
         if (distancia_real > viaje.distancia + DISTANCE_TOLERANCE) {
+
+            const mensaje = `El viaje ${id_viaje} ha recorrido una distancia mayor a la fijada originalmente,
+            además de exceder la tolerancia de ${DISTANCE_TOLERANCE} km`;
+            sendEmailNotification('Irregularidad detectada', mensaje);
+            const notificacion = await createNotification(mensaje);
+            return notificacion;
+
             sendEmailNotification('Irregularidad detectada', `El viaje ${id_viaje} ha recorrido una distancia mayor a la fijada originalmente,
             además de exceder la tolerancia de ${DISTANCE_TOLERANCE} km`);
+
         }
     } catch (error) {
         handleError(error, "viaje.service -> checkForIrregularities");
@@ -170,6 +181,18 @@ async function sendEmailNotification(subject, text) {
 }
 
 
+async function createNotification(mensaje) {
+    try {
+        const notificacion = await Notificacion.create({ mensaje: mensaje });
+        return notificacion;
+    } catch (error) {
+        handleError(error, "notificacion.service -> createNotification");
+    }
+}
+
+
+
+
 
 
 
@@ -182,5 +205,10 @@ module.exports = {
     estimateFuelConsumption,
     estimateFuelConsumptionForSpecificTrip,
     checkForIrregularities,
+
+    sendEmailNotification,
+    createNotification
+
     sendEmailNotification
+
 };
