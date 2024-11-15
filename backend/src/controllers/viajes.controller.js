@@ -83,10 +83,53 @@ async function deleteViaje(req, res) {
     }
 }
 
+async function estimateFuelConsumption(req, res) {
+    try {
+        const { params } = req;
+        const [consumption, errorConsumption] = await ViajeService.estimateFuelConsumption(params.camionId);
+        if (errorConsumption) return respondError(req, res, 404, errorConsumption);
+
+        respondSuccess(req, res, 200, consumption);
+    } catch (error) {
+        handleError(error, "viaje.controller -> estimateFuelConsumption");
+        respondError(req, res, 500, error.message);
+    }
+}
+
+async function estimateFuelConsumptionForSpecificTrip(req, res) {
+    try {
+        const { params } = req;
+        const [consumption, errorConsumption] = await ViajeService.estimateFuelConsumptionForSpecificTrip(params.viajeId);
+        if (errorConsumption) return respondError(req, res, 404, errorConsumption);
+
+        respondSuccess(req, res, 200, consumption);
+    } catch (error) {
+        handleError(error, "viaje.controller -> estimateFuelConsumptionForSpecificTrip");
+        respondError(req, res, 500, error.message);
+    }
+}
+
+async function checkForIrregularities(req, res) {
+    try {
+        const [irregularities, errorIrregularities] = await ViajeService.checkForIrregularities();
+        if (errorIrregularities) return respondError(req, res, 404, errorIrregularities);
+
+        respondSuccess(req, res, 200, irregularities);
+    } catch (error) {
+        handleError(error, "viaje.controller -> checkForIrregularities");
+        respondError(req, res, 500, error.message);
+    }
+}
+
+
+
 module.exports = {
     getViajes,
     createViaje,
     getViajeById,
     updateViaje,
-    deleteViaje
+    deleteViaje,
+    estimateFuelConsumption,
+    estimateFuelConsumptionForSpecificTrip,
+    checkForIrregularities
 };

@@ -205,10 +205,8 @@ module.exports = {
     estimateFuelConsumption,
     estimateFuelConsumptionForSpecificTrip,
     checkForIrregularities,
-
     sendEmailNotification,
-    createNotification
-
+    createNotification,
     sendEmailNotification
 
 };

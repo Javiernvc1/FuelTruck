@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import logo from '../assets/logo-modified.png';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ function LoginForm() {
           bgcolor: '#EDF2EE'
         }}
       >
-        <img src="../Logo.png" alt="Logo" style={{ height: '150px', marginRight: '10px' }} />
+        <img src={logo} alt="Logo" style={{ height: '150px', marginRight: '10px' }} />
         <Typography component="h1" variant="h5" color = '#000000'>
           Iniciar sesión
         </Typography>

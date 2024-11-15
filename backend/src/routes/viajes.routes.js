@@ -16,5 +16,8 @@ router.post('/', upload.fields([{ name: 'combustible_inicio', maxCount: 1 },
 router.get('/:id', authorizationMiddleware.isAdmin, viajeController.getViajeById);
 router.put('/:id', authorizationMiddleware.isAdmin, viajeController.updateViaje);
 router.delete('/:id', authorizationMiddleware.isAdmin, viajeController.deleteViaje);
+router.get('/estimate/:camionId', authorizationMiddleware.isAdmin, viajeController.estimateFuelConsumption);
+router.get('/estimate/:viajeId/specific', authorizationMiddleware.isAdmin, viajeController.estimateFuelConsumptionForSpecificTrip);
+router.get('/irregularities', authorizationMiddleware.isAdmin, viajeController.checkForIrregularities);
 
 module.exports = router;
