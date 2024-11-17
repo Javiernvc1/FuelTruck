@@ -124,10 +124,49 @@ async function deleteUser(req, res) {
   }
 }
 
+async function getUserByRut(req, res) {
+  try {
+    const { params } = req;
+    if (!params || !params.rut) {
+      return respondError(req, res, 400, "Datos de entrada inválidos");
+    }
+
+    const [user, errorUser] = await UserService.getUserByRut(params.rut);
+    if (errorUser) return respondError(req, res, 404, errorUser);
+
+    respondSuccess(req, res, 200, user);
+  }
+  catch (error) {
+    handleError(error, "user.controller -> getUserByRut");
+    respondError(req, res, 500, error.message);
+  }
+}
+
+async function getUserByRole(req, res) {
+  try {
+    const { params } = req;
+    if (!params || !params.role) {
+      return respondError(req, res, 400, "Datos de entrada inválidos");
+    }
+
+    const [users, errorUsers] = await UserService.getUserByRole(params.role);
+    if (errorUsers) return respondError(req, res, 404, errorUsers);
+
+    respondSuccess(req, res, 200, users);
+  }
+  catch (error) {
+    handleError(error, "user.controller -> getUserByRole");
+    respondError(req, res, 500, error.message);
+  }
+}
+
+
 module.exports = {
   getUsers,
   createUser,
   getUserById,
   updateUser,
   deleteUser,
+  getUserByRut,
+  getUserByRole
 };

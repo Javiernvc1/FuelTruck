@@ -36,6 +36,14 @@ const Viaje = sequelize.define('Viaje', {
     type: DataTypes.TEXT,
     allowNull: false
   },
+  destino: { // Nueva columna
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  estado: { // Nueva columna
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   tipo_cargaId: {
     type: DataTypes.STRING,
     references: {
@@ -44,10 +52,10 @@ const Viaje = sequelize.define('Viaje', {
     }
   },
   empresaId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING, // Actualiza el tipo de dato a STRING
     references: {
       model: Empresa,
-      key: 'id_empresa'
+      key: 'nombre_empresa' // Actualiza la clave a nombre_empresa
     }
   },
   userId: {

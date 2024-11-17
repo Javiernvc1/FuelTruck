@@ -27,6 +27,10 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true
   },
+  telefono: { // Nueva columna
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   roleId: {
     type: DataTypes.STRING,
     references: {

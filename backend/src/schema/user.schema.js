@@ -44,6 +44,14 @@ const userBodySchema = Joi.object({
       "string.base": "El rol debe ser de tipo string.",
       "any.only": "El rol proporcionado no es válido.",
     }),
+  telefono: Joi.string().min(9).max(12).messages({
+      "string.empty": "El teléfono no puede estar vacío.",
+      "string.base": "El teléfono debe ser de tipo string.",
+      "string.min": "El teléfono debe tener al menos 9 caracteres.",
+      "string.max": "El teléfono debe tener máximo 12 caracteres.",
+    })
+
+  ,
   newPassword: Joi.string().min(5).messages({
     "string.empty": "La contraseña no puede estar vacía.",
     "string.base": "La contraseña debe ser de tipo string.",

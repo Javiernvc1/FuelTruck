@@ -17,15 +17,16 @@ async function getCamiones() {
 
 async function createCamion(camion) {
     try {
-        const { patente, marca, modelo, userId } = camion;
+        const { patente, marca, modelo, gasto_medio, userId } = camion;
 
-        const userFound = await User.findByPk(userId);
+        const userFound = await User.findOne({ where: { rut:userId } } );
         if (!userFound) return [null, "El usuario no existe"];
 
         await Camion.create({
             patente,
             marca,
             modelo,
+            gasto_medio,
             userId
         });
 

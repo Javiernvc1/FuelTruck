@@ -10,7 +10,8 @@ const Empresa = sequelize.define('Empresa', {
   },
   nombre_empresa: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   direccion: {
     type: DataTypes.STRING,

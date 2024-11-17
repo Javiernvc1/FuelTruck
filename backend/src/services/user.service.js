@@ -25,7 +25,7 @@ async function getUsers() {
 
 async function createUser(user) {
   try {
-    const { nombre, apellido, email, rut, password, roleId } = user;
+    const { nombre, apellido, email, rut, password, telefono, roleId } = user;
 
     const userFound = await User.findOne({ where: { email } });
     if (userFound) return [null, "El usuario ya existe"];
@@ -42,6 +42,7 @@ async function createUser(user) {
       email,
       rut,
       password: encryptedPassword,
+      telefono,
       roleId: roleFound.name
     });
 
@@ -66,9 +67,14 @@ async function getUserById(id) {
   }
 }
 
+const comparePassword = async (inputPassword, storedPassword) => {
+  return await bcrypt.compare(inputPassword, storedPassword);
+};
+
 async function updateUser(id, user) {
+  console.log(user);
   try {
-    const { nombre, apellido, email, rut, password, newPassword, roles } = user;
+    const { nombre, apellido, email, rut, password, newPassword, telefono, roleId } = user;
 
     const userFound = await User.findByPk(id);
     if (!userFound) return [null, "El usuario no existe"];
@@ -77,7 +83,7 @@ async function updateUser(id, user) {
     const matchPassword = await comparePassword(password, userFound.password);
     if (!matchPassword) return [null, "La contraseña no coincide"];
 
-    const roleFound = await Role.findOne({ where: { name: roles } });
+    const roleFound = await Role.findOne({ where: { name: roleId } });
     if (!roleFound) return [null, "El rol no existe"];
 
     // Aquí asumimos que tienes una función para encriptar contraseñas
@@ -89,7 +95,8 @@ async function updateUser(id, user) {
       email,
       rut,
       password: encryptedPassword,
-      roleId: roleFound.id
+      telefono,
+      roleId: roleFound.name
     });
 
     return [null, "Usuario actualizado exitosamente"];
@@ -107,10 +114,41 @@ async function deleteUser(id) {
   }
 }
 
+async function getUserByRut(rut) {
+  try {
+    const user = await User.findOne({ where: { rut } });
+
+    if (!user) return [null, "El usuario no existe"];
+
+    return [user, null];
+  } catch (error) {
+    handleError(error, "user.service -> getUserByRut");
+  }
+}
+
+async function getUserByRole(role) {
+  try {
+    const users = await User.findAll({
+      where: {
+        roleId: role
+      }
+    });
+
+    if (!users) return [null, "No hay usuarios con ese rol"];
+
+    return [users, null];
+  } catch (error) {
+    handleError(error, "user.service -> getUserByRole");
+  }
+}
+
+
 module.exports = {
   getUsers,
   createUser,
   getUserById,
   updateUser,
   deleteUser,
+  getUserByRut,
+  getUserByRole
 };

@@ -9,7 +9,7 @@ async function isAdmin(req, res, next) {
     const user = await User.findOne({ 
       where: { email: req.email },
     });
-
+    console.log(user);
     if (!user) {
       return respondError(
         req,
