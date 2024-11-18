@@ -1,12 +1,20 @@
 import axios from "./root.service";
-
+import cookies from 'js-cookie';
 const headers = {
     'Content-Type': 'multipart/form-data'
   };
 
+  const getAuthHeaders = () => {
+    const token = cookies.get('jwt-auth'); // Obtén el token de autenticación de las cookies
+    return {
+        ...headers,
+        'Authorization': `Bearer ${token}`
+    };
+};
+
   export const createCamion = async (camion) => {
     try {
-        const response = await axios.post('/api/camiones', camion, { headers });
+        const response = await axios.post('/camiones', camion, { headers });
         return response;
     } catch (error) {
         console.error('Error al crear el camión:', error);
@@ -15,8 +23,10 @@ const headers = {
 
 export const getCamiones = async () => {
     try {
-        const response = await axios.get('/api/camiones');
-        return response.data;
+        const response = await axios.get('/camiones', { headers: getAuthHeaders() });
+        console.log('datos camion', response.data);
+        return response.data.data;
+        
     } catch (error) {
         console.error('Error al obtener los camiones:', error);
     }

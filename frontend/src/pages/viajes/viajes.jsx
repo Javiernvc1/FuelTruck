@@ -9,10 +9,14 @@ const Trips = () => {
     // Función para obtener los viajes del usuario
     const fetchTrips = async () => {
       try {
-        const response = await axios.get('/api/trips'); // Reemplaza con la URL correcta de tu API
-        setTrips(response.data);
+        const data = await getTrips();
+        if (Array.isArray(data)) {
+          setTrips(data);
+        } else {
+          console.error('La respuesta de la API no es un array:', data);
+        }
       } catch (error) {
-        console.error('Error al obtener los viajes:', error);
+        console.error('Error al obtener los camiones:', error);
       }
     };
 
@@ -27,18 +31,38 @@ const Trips = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
+              <TableCell>Inicio</TableCell>
               <TableCell>Destino</TableCell>
               <TableCell>Fecha</TableCell>
               <TableCell>Estado</TableCell>
+              <TableCell>Distancia</TableCell>
+              <TableCell>Odometro inicio</TableCell>
+              <TableCell>Odometro final</TableCell>
+              <TableCell>Combustible inicio</TableCell>
+              <TableCell>Combustible final</TableCell>
+              <TableCell>Tipo de carga</TableCell>
+              <TableCell>Empresa</TableCell>
+              <TableCell>Conductor</TableCell>
+              <TableCell>Camion</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {trips.map((trip) => (
               <TableRow key={trip.id}>
                 <TableCell>{trip.id}</TableCell>
-                <TableCell>{trip.destination}</TableCell>
-                <TableCell>{trip.date}</TableCell>
-                <TableCell>{trip.status}</TableCell>
+                <TableCell>{trip.inicio}</TableCell>
+                <TableCell>{trip.destino}</TableCell>
+                <TableCell>{trip.fecha}</TableCell>
+                <TableCell>{trip.estado}</TableCell>
+                <TableCell>{trip.distancia}</TableCell>
+                <TableCell>{trip.odometro_inicio}</TableCell>
+                <TableCell>{trip.odometro_final}</TableCell>
+                <TableCell>{trip.combustible_inicio}</TableCell>
+                <TableCell>{trip.combustible_final}</TableCell>
+                <TableCell>{trip.tipo_cargaId}</TableCell>
+                <TableCell>{trip.empresaId}</TableCell>
+                <TableCell>{trip.userId}</TableCell>
+                <TableCell>{trip.camionId}</TableCell>
               </TableRow>
             ))}
           </TableBody>

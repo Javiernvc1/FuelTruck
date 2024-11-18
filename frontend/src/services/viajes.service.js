@@ -1,12 +1,20 @@
 import axios from "./root.service";
-
+import cookies from 'js-cookie';
 const headers = {
     'Content-Type': 'multipart/form-data'
   };
 
+  const getAuthHeaders = () => {
+    const token = cookies.get('jwt-auth'); // Obtén el token de autenticación de las cookies
+    return {
+        ...headers,
+        'Authorization': `Bearer ${token}`
+    };
+};
+
 export const getVijaes = async () => {
     try {
-        const response = await axios.get('/api/viajes');
+        const response = await axios.get('/viajes', { headers: getAuthHeaders() });
         return response.data;
     } catch (error) {
         console.error('Error al obtener los viajes:', error);
