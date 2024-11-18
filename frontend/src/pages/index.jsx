@@ -21,6 +21,9 @@ function DashboardLayoutBasic() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [camiones, setCamiones] = React.useState([]);
   const [conductores, setConductores] = React.useState([]);
+  const [totalViajes, setTotalViajes] = React.useState(0);
+  const [viajesSemana, setViajesSemana] = React.useState(0);
+  const [gastosCombustible, setGastosCombustible] = React.useState([]);
   const [trips, setTrips] = React.useState([]);
   const navigate = useNavigate();
   

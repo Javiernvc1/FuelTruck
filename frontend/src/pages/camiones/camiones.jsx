@@ -11,6 +11,7 @@ const Camiones = () => {
     const fetchCamiones = async () => {
       try {
         const data = await getCamiones();
+
         if (Array.isArray(data)) {
           setCamiones(data);
         } else {
