@@ -10,8 +10,8 @@ import DashboardLayoutBasic from './pages/index.jsx';
 import Notifications from './pages/notifications/notifications.jsx';
 import Trips from './pages/viajes/viajes.jsx'
 import Cargas from './pages/cargas/cargas.jsx';
-import Conductores from './pages/conductores/Conductores.jsx';
-import Camiones from './pages/camiones/Camiones.jsx';
+import Conductores from './pages/conductores/conductores.jsx';
+import Camiones from './pages/camiones/camiones.jsx';
 
 const router = createBrowserRouter([
   {
