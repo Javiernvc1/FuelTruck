@@ -20,6 +20,8 @@ function DashboardLayoutBasic() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [camiones, setCamiones] = React.useState([]);
+  const [conductores, setConductores] = React.useState([]);
+  const [trips, setTrips] = React.useState([]);
   const navigate = useNavigate();
   
   const handleDrawerToggle = () => {
