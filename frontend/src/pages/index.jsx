@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { logout } from '../services/auth.service';
 import { useNavigate, Link, Route, Routes, Outlet} from 'react-router-dom';
-import logo from '../assets/logo-modified.png';
+import logo from '../assets/Logo-modified.png';
 import General from './general/general.jsx';
 
 const drawerWidth = 240;
