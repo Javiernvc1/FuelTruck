@@ -38,10 +38,10 @@ const General = () => {
     <Box sx={{ p: 1  }}>
      <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
-          <Paper sx={{ p: 2, bgcolor: '#151C15' }}>
-            <Typography variant="h6" sx={{ flexGrow: 1, color: 'white' }}>Estadísticas de Viajes</Typography>
-            <Typography variant="body1" sx={{ flexGrow: 1, color: 'white' }}>Total de viajes: {totalViajes}</Typography>
-            <Typography variant="body1" sx={{ flexGrow: 1, color: 'white' }}>+{viajesSemana} esta semana</Typography>
+          <Paper sx={{ p: 2, bgcolor: '#E6B82D' }}>
+            <Typography variant="h6" sx={{ flexGrow: 1, color: '#151C15' }}>Estadísticas de Viajes</Typography>
+            <Typography variant="body1" sx={{ flexGrow: 1, color: '#151C15' }}>Total de viajes: {totalViajes}</Typography>
+            <Typography variant="body1" sx={{ flexGrow: 1, color: '#151C15' }}>+{viajesSemana} esta semana</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={4}>

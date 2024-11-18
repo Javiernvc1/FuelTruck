@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Box, Container, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
@@ -18,15 +18,28 @@ const drawerWidth = 240;
 
 function DashboardLayoutBasic() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/auth');
+  };
+
+  const handleChangePassword = () => {
+    navigate('/');
   };
 
   const drawer = (
@@ -52,7 +65,7 @@ function DashboardLayoutBasic() {
           <ListItemIcon>
             <LogoutIcon sx={{ color: '#E6B82D' }} />
           </ListItemIcon>
-          <ListItemText primary="Logout" sx={{ color: 'white' }}/>
+          <ListItemText primary="Salir" sx={{ color: 'white' }}/>
         </ListItem>
       </List>
     </div>
@@ -82,9 +95,17 @@ function DashboardLayoutBasic() {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'black' }}>
             Bienvenido
           </Typography>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleMenuOpen}>
             <AccountCircleIcon sx={{ color: '#151C15' }}/>
           </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem onClick={handleChangePassword}>Cambio de contraseña</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Box
