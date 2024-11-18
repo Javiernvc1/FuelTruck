@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import logo from '../assets/logo-modified.png';
+import logo from '../assets/Logo-modified.png';
 
 function LoginForm() {
   const navigate = useNavigate();
