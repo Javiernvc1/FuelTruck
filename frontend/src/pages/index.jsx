@@ -19,6 +19,7 @@ const drawerWidth = 240;
 function DashboardLayoutBasic() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [camiones, setCamiones] = React.useState([]);
   const navigate = useNavigate();
   
   const handleDrawerToggle = () => {
