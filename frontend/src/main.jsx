@@ -35,10 +35,10 @@ const router = createBrowserRouter([
             path: 'viajes',
             element: <Trips />, // Añade la ruta para el componente Trips
           },
-          {
-            path: 'cargas-de-combustible',
-            element: <Cargas />, // Añade la ruta para el componente Cargas
-          },
+          //{
+            //path: 'cargas-de-combustible',
+            //element: <Cargas />, // Añade la ruta para el componente Cargas
+          //},
           {
             path: 'conductores',
             element: <Conductores />, // Añade la ruta para el componente Conductores

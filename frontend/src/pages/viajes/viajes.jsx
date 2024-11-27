@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import axios from 'axios';
-
+import { getViajes } from '../../services/viajes.service.js';
 const Trips = () => {
   const [trips, setTrips] = useState([]);
 
@@ -9,7 +9,7 @@ const Trips = () => {
     // Función para obtener los viajes del usuario
     const fetchTrips = async () => {
       try {
-        const data = await getTrips();
+        const data = await getViajes();
         if (Array.isArray(data)) {
           setTrips(data);
         } else {

@@ -38,6 +38,7 @@ async function createFactura(req, res) {
 async function getFacturaById(req, res) {
     try {
         const { params } = req;
+        console.log('params: ', params);
         const [factura, errorFactura] = await FacturaService.getFacturaById(params.id);
         if (errorFactura) return respondError(req, res, 404, errorFactura);
 
@@ -74,10 +75,26 @@ async function deleteFactura(req, res) {
     }
 }
 
+async function getLitrosAll (req, res) {
+    try {
+        const [litros, errorLitros] = await FacturaService.getLitrosAll();
+        if (errorLitros) return respondError(req, res, 404, errorLitros);
+
+        litros.length === 0
+            ? respondSuccess(req, res, 204)
+            : respondSuccess(req, res, 200, litros);
+    } catch (error) {
+        handleError(error, "factura.controller -> getLitrosAll");
+        respondError(req, res, 500, error.message);
+    }
+}
+
+
 module.exports = {
     getFacturas,
     createFactura,
     getFacturaById,
     updateFactura,
-    deleteFactura
+    deleteFactura,
+    getLitrosAll
 };

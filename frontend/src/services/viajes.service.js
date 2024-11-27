@@ -12,10 +12,10 @@ const headers = {
     };
 };
 
-export const getVijaes = async () => {
+export const getViajes = async () => {
     try {
         const response = await axios.get('/viajes', { headers: getAuthHeaders() });
-        return response.data;
+        return response.data.data;
     } catch (error) {
         console.error('Error al obtener los viajes:', error);
     }

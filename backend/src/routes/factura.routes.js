@@ -9,6 +9,7 @@ router.use(authenticationMiddleware);
 
 router.get('/', authorizationMiddleware.isAdmin, facturaController.getFacturas);
 router.post('/', authorizationMiddleware.isAdmin, facturaController.createFactura);
+router.get('/litros', authorizationMiddleware.isAdmin, facturaController.getLitrosAll);
 router.get('/:id', authorizationMiddleware.isAdmin, facturaController.getFacturaById);
 router.put('/:id', authorizationMiddleware.isAdmin, facturaController.updateFactura);
 router.delete('/:id', authorizationMiddleware.isAdmin, facturaController.deleteFactura);

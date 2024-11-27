@@ -5,8 +5,8 @@ const Factura = require('../models/factura.model.js');
 async function getFacturas() {
     try {
         const facturas = await Factura.findAll();
-
-        if (!facturas) return [null, "No hay facturas"];
+        console.log('facturas: ', facturas);
+        if (!facturas || facturas.length === 0) return [0, null];
 
         return [facturas, null];
     } catch (error) {
@@ -16,11 +16,12 @@ async function getFacturas() {
 
 async function createFactura(factura) {
     try {
-        const { monto, fecha, camionId, userId, servicentroId } = factura;
+        const { monto, fecha, litros, camionId, userId, servicentroId } = factura;
 
         await Factura.create({
             monto,
             fecha,
+            litros,
             camionId,
             userId,
             servicentroId
@@ -34,6 +35,7 @@ async function createFactura(factura) {
 
 async function getFacturaById(id) {
     try {
+        console.log('id: ', id);
         const factura = await Factura.findByPk(id);
 
         if (!factura) return [null, "La factura no existe"];
@@ -54,6 +56,7 @@ async function updateFactura(id, factura) {
         await Factura.update({
             monto,
             fecha,
+            litros,
             camionId,
             userId,
             servicentroId
@@ -82,11 +85,26 @@ async function deleteFactura(id) {
         handleError(error, "factura.service -> deleteFactura");
     }
 }
+async function getLitrosAll() {
+    try {
+        let result = await Factura.sum('litros');
+        if (result === null) {
+            result = 0;
+        }
+        
+        return [result, null];
+    } catch (error) {
+        handleError(error, "factura.service -> getLitrosAll");
+        return [null, error.message];
+    }
+}
+
 
 module.exports = {
     getFacturas,
     createFactura,
     getFacturaById,
     updateFactura,
-    deleteFactura
+    deleteFactura,
+    getLitrosAll
 };

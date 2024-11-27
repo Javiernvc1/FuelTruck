@@ -1,15 +1,35 @@
 import axios from "./root.service";
+import cookies from 'js-cookie';
 
 const headers = {
     'Content-Type': 'multipart/form-data'
-  };
+};
+
+const getAuthHeaders = () => {
+    const token = cookies.get('jwt-auth'); // Obtén el token de autenticación de las cookies
+    return {
+        ...headers,
+        'Authorization': `Bearer ${token}`
+    };
+};
 
 export const getFacturas = async () => {
     try {
-        const response = await axios.get('/api/facturas');
+        const response = await axios.get('/facturas');
+        
         return response.data;
     } catch (error) {
         console.error('Error al obtener las facturas:', error);
+    }
+}
+
+export const getLitrosAll = async () => {
+    try {
+        const response = await axios.get('/facturas/litros');
+        console.log('litros: ', response)
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener los litros:', error);
     }
 }
 
@@ -22,14 +42,14 @@ export const createFactura = async (factura) => {
     }
 }
 
-export const getFacturaById = async (id) => {
+/*export const getFacturaById = async (id) => {
     try {
-        const response = await axios.get(`/api/facturas/${id}`);
+        const response = await axios.get(`/facturas/${id}`);
         return response.data;
     } catch (error) {
         console.error('Error al obtener la factura:', error);
     }
-}
+}*/
 
 export const updateFactura = async (id, factura) => {
     try {

@@ -55,7 +55,12 @@ function DashboardLayoutBasic() {
       </Toolbar>
       <List>
         {['General', 'Notificaciones', 'Viajes', 'Cargas de Combustible', 'Conductores', 'Camiones'].map((text, index) => (
-          <ListItem button key={text} component={Link} to={text === 'General' ? '/' : `/${text.toLowerCase().replace(/ /g, '-')}`}>
+          <ListItem 
+          button 
+          key={text} 
+          component={text === 'Cargas de Combustible' ? 'div' : Link} 
+          to={text === 'General' ? '/' : text === 'Cargas de Combustible' ? undefined : `/${text.toLowerCase().replace(/ /g, '-')}`}
+        >
             <ListItemIcon>
               {index === 0 ? <DashboardIcon sx={{ color: '#E6B82D' }}/> : null}
               {index === 1 ? <EmailIcon sx={{ color: '#E6B82D' }} /> : null}
