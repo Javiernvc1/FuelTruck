@@ -1,13 +1,22 @@
 import axios from "./root.service";
-
+import cookies from 'js-cookie';
 const headers = {
     'Content-Type': 'multipart/form-data'
+  };
+
+  const getAuthHeaders = () => {
+    const token = cookies.get('jwt-auth'); // Obtén el token de autenticación de las cookies
+    return {
+        ...headers,
+        'Authorization': `Bearer ${token}`
+    };
 };
+
 
 export const getEmpresas = async () => {
     try {
-        const response = await axios.get('/api/empresas');
-        return response.data;
+        const response = await axios.get('/empresas', { headers: getAuthHeaders() });
+        return response.data.data;
     } catch (error) {
         console.error('Error al obtener las empresas:', error);
     }

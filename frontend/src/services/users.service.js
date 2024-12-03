@@ -14,12 +14,14 @@ const headers = {
 
 export const createUser = async (user) => {
     try {
-        const response = await axios.post('/users', user, { headers: getAuthHeaders() });
-        return response;
+        console.log('user:', user);
+        return axios.post("users/", user, { headers: getAuthHeaders() });
+        
     } catch (error) {
         console.error('Error al crear el usuario:', error);
+        // Lanza el error para manejarlo en el componente
     }
-}
+};
 
 export const getUsers = async () => {
     try {

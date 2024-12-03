@@ -23,7 +23,7 @@ export const getViajes = async () => {
 
 export const createViaje = async (viaje) => {
     try {
-        const response = await axios.post('/api/viajes', viaje, { headers });
+        const response = await axios.post('/viajes', viaje, { headers });
         return response;
     } catch (error) {
         console.error('Error al crear el viaje:', error);

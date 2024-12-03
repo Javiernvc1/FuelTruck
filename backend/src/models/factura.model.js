@@ -43,6 +43,10 @@ const Factura = sequelize.define('Factura', {
             model: Servicentro,
             key: 'id_servicentro'
         }
+    },
+    ubicacion: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     tableName: 'facturas'

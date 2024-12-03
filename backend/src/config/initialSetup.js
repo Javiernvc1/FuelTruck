@@ -33,11 +33,12 @@ async function createUsers() {
 
     const userPassword = await hashPassword('user123');
     const adminPassword = await hashPassword('admin123');
-
+    const testPassword = await hashPassword('test123');
 
     await User.bulkCreate([
       { nombre: 'user', apellido: '',email: 'user@email.com', password: userPassword, rut: '1.111.111-1', roleId: userRole },
-      { nombre: 'admin', apellido: '', email: 'admin@email.com', password: adminPassword,rut: '2.222.222-2', roleId: adminRole }
+      { nombre: 'admin', apellido: '', email: 'admin@email.com', password: adminPassword,rut: '2.222.222-2', roleId: adminRole },
+      { nombre: 'test11', apellido: 'testtt', email: 'test11@gmail.com', password: testPassword, rut: '3.333.333-3', roleId: userRole },
     ]);
 
     console.log("* => Users creados exitosamente");

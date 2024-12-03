@@ -16,7 +16,7 @@ async function getFacturas() {
 
 async function createFactura(factura) {
     try {
-        const { monto, fecha, litros, camionId, userId, servicentroId } = factura;
+        const { monto, fecha, litros, camionId, userId, servicentroId, ubicacion } = factura;
 
         await Factura.create({
             monto,
@@ -24,7 +24,8 @@ async function createFactura(factura) {
             litros,
             camionId,
             userId,
-            servicentroId
+            servicentroId,
+            ubicacion
         });
 
         return [null, "Factura creada exitosamente"];
@@ -48,7 +49,7 @@ async function getFacturaById(id) {
 
 async function updateFactura(id, factura) {
     try {
-        const { monto, fecha, camionId, userId, servicentroId } = factura;
+        const { monto, fecha, camionId, userId, servicentroId, ubicacion } = factura;
 
         const facturaFound = await Factura.findByPk(id);
         if (!facturaFound) return [null, "La factura no existe"];
@@ -59,7 +60,8 @@ async function updateFactura(id, factura) {
             litros,
             camionId,
             userId,
-            servicentroId
+            servicentroId,
+            ubicacion
         }, {
             where: { id_factura: id }
         });

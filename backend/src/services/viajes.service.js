@@ -4,7 +4,8 @@ const Viaje = require('../models/viajes.model.js');
 const nodemailer = require('nodemailer');
 const Camion = require('../models/camion.model.js');
 const Notificacion = require('../models/notificacion.model.js');
-
+const User = require('../models/user.model.js');
+const Empresa = require('../models/empresa.model.js');
 
 async function getViajes() {
     try {
@@ -22,7 +23,23 @@ async function getViajes() {
 
 async function createViaje(viaje) {
     try {
-        const { fecha, tipo_carga, distancia, combustible_inicio, combustible_final, empresaId, userId, camionId } = viaje;
+        console.log("VIAJE",viaje);
+        const { fecha, tipo_carga, distancia, combustible_inicio, combustible_final, empresaId, userId, camionId, odometro_inicio, odometro_final, destino, estado } = viaje;
+
+        // Verificar que los valores de empresaId, userId y camionId existen en las tablas correspondientes
+        const empresa = await Empresa.findByPk(empresaId);
+        const user = await User.findByPk(userId);
+        const camion = await Camion.findByPk(camionId);
+
+        if (!empresa) {
+            return [null, `La empresa con ID ${empresaId} no existe`];
+        }
+        if (!user) {
+            return [null, `El usuario con ID ${userId} no existe`];
+        }
+        if (!camion) {
+            return [null, `El camión con ID ${camionId} no existe`];
+        }
 
         await Viaje.create({
             fecha,
@@ -30,9 +47,13 @@ async function createViaje(viaje) {
             distancia,
             combustible_inicio, // Ya es un string base64
             combustible_final, // Ya es un string base64
-            empresaId,
-            userId,
-            camionId
+            empresaId: empresa.nombre_empresa,
+            userId: user.rut,
+            camionId: camion.patente,
+            odometro_inicio,
+            odometro_final,
+            destino,
+            estado
         });
 
         return [null, "Viaje creado exitosamente"];

@@ -9,15 +9,15 @@ const authorizationMiddleware = require('../middlewares/authorization.middleware
 
 router.use(authenticationMiddleware);
 
-router.get('/', authorizationMiddleware.isAdmin, viajeController.getViajes);
+router.get('/',  viajeController.getViajes);
 router.post('/', upload.fields([{ name: 'combustible_inicio', maxCount: 1 }, 
             { name: 'combustible_final', maxCount: 1 }]), 
-            authorizationMiddleware.isAdmin, viajeController.createViaje);
-router.get('/:id', authorizationMiddleware.isAdmin, viajeController.getViajeById);
-router.put('/:id', authorizationMiddleware.isAdmin, viajeController.updateViaje);
-router.delete('/:id', authorizationMiddleware.isAdmin, viajeController.deleteViaje);
-router.get('/estimate/:camionId', authorizationMiddleware.isAdmin, viajeController.estimateFuelConsumption);
-router.get('/estimate/:viajeId/specific', authorizationMiddleware.isAdmin, viajeController.estimateFuelConsumptionForSpecificTrip);
+             viajeController.createViaje);
+router.get('/:id',  viajeController.getViajeById);
+router.put('/:id',  viajeController.updateViaje);
+router.delete('/:id',  viajeController.deleteViaje);
+router.get('/estimate/:camionId',  viajeController.estimateFuelConsumption);
+router.get('/estimate/:viajeId/specific',  viajeController.estimateFuelConsumptionForSpecificTrip);
 router.get('/irregularities', authorizationMiddleware.isAdmin, viajeController.checkForIrregularities);
 
 module.exports = router;

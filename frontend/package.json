@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
-    "@toolpad/core": "^0.8.1",
+    "@toolpad/core": "^0.1.55",
     "axios": "^1.5.1",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",

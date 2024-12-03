@@ -58,8 +58,8 @@ function DashboardLayoutBasic() {
           <ListItem 
           button 
           key={text} 
-          component={text === 'Cargas de Combustible' ? 'div' : Link} 
-          to={text === 'General' ? '/' : text === 'Cargas de Combustible' ? undefined : `/${text.toLowerCase().replace(/ /g, '-')}`}
+          component={Link} 
+          to={text === 'General' ? '/' : text === 'Cargas de Combustible' ? '/facturas' : `/${text.toLowerCase().replace(/ /g, '-')}`}
         >
             <ListItemIcon>
               {index === 0 ? <DashboardIcon sx={{ color: '#E6B82D' }}/> : null}

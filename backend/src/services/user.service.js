@@ -24,8 +24,10 @@ async function getUsers() {
 }
 
 async function createUser(user) {
+  console.log(user);
   try {
     const { nombre, apellido, email, rut, password, telefono, roleId } = user;
+    console.log("CONTRASEÑA", password); // Verificar la contraseña en texto plano
 
     const userFound = await User.findOne({ where: { email } });
     if (userFound) return [null, "El usuario ya existe"];
@@ -33,8 +35,8 @@ async function createUser(user) {
     const roleFound = await Role.findOne({ where: { name: roleId } });
     if (!roleFound) return [null, "El rol no existe"];
 
-    // Aquí asumimos que tienes una función para encriptar contraseñas
     const encryptedPassword = await hashPassword(password);
+    console.log("CONTRASEÑA HASHEADA", password, encryptedPassword); // Verificar la contraseña hasheada
 
     const newUser = await User.create({
       nombre,

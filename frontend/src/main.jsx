@@ -12,6 +12,7 @@ import Trips from './pages/viajes/viajes.jsx'
 import Cargas from './pages/cargas/cargas.jsx';
 import Conductores from './pages/conductores/conductores.jsx';
 import Camiones from './pages/camiones/camiones.jsx';
+import Facturas from './pages/facturas/facturas.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,10 +36,10 @@ const router = createBrowserRouter([
             path: 'viajes',
             element: <Trips />, // Añade la ruta para el componente Trips
           },
-          //{
-            //path: 'cargas-de-combustible',
-            //element: <Cargas />, // Añade la ruta para el componente Cargas
-          //},
+          {
+            path: 'facturas',
+            element: <Facturas />, // Añade la ruta para el componente Cargas
+          },
           {
             path: 'conductores',
             element: <Conductores />, // Añade la ruta para el componente Conductores
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
           {
             path: 'camiones',
             element: <Camiones />, // Añade la ruta para el componente Camiones
-          },
+          }
           // Puedes añadir más rutas aquí según sea necesario
         ],
       },

@@ -1,7 +1,8 @@
 "use strict";
 // Importa el modulo 'express' para crear las rutas
 const express = require("express");
-
+const multer = require("multer");
+const upload = multer();
 /** Controlador de usuarios */
 const usuarioController = require("../controllers/user.controller.js");
 
@@ -18,7 +19,7 @@ const router = express.Router();
 router.use(authenticationMiddleware);
 // Define las rutas para los usuarios
 router.get("/", authorizationMiddleware.isAdmin, usuarioController.getUsers);
-router.post("/", authorizationMiddleware.isAdmin, usuarioController.createUser);
+router.post("/",upload.none(), authorizationMiddleware.isAdmin, usuarioController.createUser);
 router.get("/:id", usuarioController.getUserById);
 router.get("/rut/:rut", usuarioController.getUserByRut);
 router.get("/role/:role", usuarioController.getUserByRole);

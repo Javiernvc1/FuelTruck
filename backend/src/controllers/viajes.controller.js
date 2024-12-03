@@ -28,8 +28,8 @@ async function getViajes(req, res) {
 async function createViaje(req, res) {
     try {
         const { body, files } = req;
-        const combustible_inicio_base64 = imageToBase64(files.combustible_inicio[0]);
-        const combustible_final_base64 = imageToBase64(files.combustible_final[0]);
+        const combustible_inicio_base64 = imageBase64(files.combustible_inicio[0]);
+        const combustible_final_base64 = imageBase64(files.combustible_final[0]);
         const [newViaje, errorViaje] = await ViajeService.createViaje({ ...body, combustible_inicio: combustible_inicio_base64, combustible_final: combustible_final_base64 });
 
         if (errorViaje) return respondError(req, res, 400, errorViaje);

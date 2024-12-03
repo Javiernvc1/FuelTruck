@@ -34,6 +34,7 @@ const userBodySchema = Joi.object({
     "any.required": "El email es obligatorio.",
     "string.base": "El email debe ser de tipo string.",
     "string.email": "El email debe tener un formato válido.",
+    
   }),
   roleId: Joi.array()
     .items(Joi.string().valid(...ROLES))

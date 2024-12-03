@@ -23,27 +23,24 @@ async function comparePassword(userPassword, dbPassword) {
  * @param {Object} user - Objeto de usuario
  */
 async function login(user) {
-  console.log(user);
   try {
     const { email, password } = user;
 
     const userFound = await User.findOne({
       where: { email },
     });
-    //console.log(userFound);
+    console.log("USUARIO", userFound);
     if (!userFound) {
       return [null, null, "El usuario y/o contraseña son incorrectos"];
     }
 
-    // Aquí debes implementar tu propia función para comparar contraseñas
+    // Compara la contraseña ingresada con la almacenada en la base de datos
     const matchPassword = await comparePassword(password, userFound.password);
-    console.log(matchPassword, password, userFound.password);
+    console.log("COMPARACIÓN DE CONTRASEÑAS", matchPassword, password, userFound.password);
     if (!matchPassword) {
       return [null, null, "El usuario y/o contraseña son incorrectos"];
     }
 
-    //const roles = userFound.roles.map(role => role.name); 
-    
     const roles = [userFound.roleId];
     console.log(roles);
     const accessToken = jwt.sign(
@@ -64,7 +61,7 @@ async function login(user) {
 
     return [accessToken, refreshToken, null];
   } catch (error) {
-    handleError(error, "auth.service -> signIn");
+    handleError(error, "auth.service -> login");
   }
 }
 

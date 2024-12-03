@@ -38,14 +38,6 @@ const User = sequelize.define('User', {
       key: 'name'
     }
   }
-}, {
-  tableName: 'users',
-  hooks: {
-    beforeCreate: async (user) => {
-      const salt = await bcrypt.genSalt();
-      user.password = await bcrypt.hash(user.password, salt);
-    }
-  }
 });
 
 

@@ -7,11 +7,11 @@ const authorizationMiddleware = require('../middlewares/authorization.middleware
 
 router.use(authenticationMiddleware);
 
-router.get('/', authorizationMiddleware.isAdmin, facturaController.getFacturas);
-router.post('/', authorizationMiddleware.isAdmin, facturaController.createFactura);
-router.get('/litros', authorizationMiddleware.isAdmin, facturaController.getLitrosAll);
-router.get('/:id', authorizationMiddleware.isAdmin, facturaController.getFacturaById);
-router.put('/:id', authorizationMiddleware.isAdmin, facturaController.updateFactura);
-router.delete('/:id', authorizationMiddleware.isAdmin, facturaController.deleteFactura);
+router.get('/',  facturaController.getFacturas);
+router.post('/',  facturaController.createFactura);
+router.get('/litros', facturaController.getLitrosAll);
+router.get('/:id', facturaController.getFacturaById);
+router.put('/:id', facturaController.updateFactura);
+router.delete('/:id', facturaController.deleteFactura);
 
 module.exports = router;
