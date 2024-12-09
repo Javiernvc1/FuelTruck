@@ -1,7 +1,7 @@
 "use strict";
 const { handleError } = require("../utils/errorHandler");
 const Factura = require('../models/factura.model.js');
-
+const Servicentro = require('../models/servicentro.model.js');
 async function getFacturas() {
     try {
         const facturas = await Factura.findAll();
@@ -17,7 +17,7 @@ async function getFacturas() {
 async function createFactura(factura) {
     try {
         const { monto, fecha, litros, camionId, userId, servicentroId, ubicacion } = factura;
-
+        console.log('factura: ', factura);
         await Factura.create({
             monto,
             fecha,
