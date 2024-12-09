@@ -1,7 +1,7 @@
 "use strict";
 const { handleError } = require("../utils/errorHandler");
 const Factura = require('../models/factura.model.js');
-const Servicentro = require('../models/servicentro.model.js');
+const Servicentro = require('../models/Servicentro.model.js');
 async function getFacturas() {
     try {
         const facturas = await Factura.findAll();
