@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const Camion = require('../models/camion.model.js');
 const Notificacion = require('../models/notificacion.model.js');
 const User = require('../models/user.model.js');
-const Empresa = require('../models/empresa.model.js');
+const Empresa = require('../models/Empresa.model.js');
 
 async function getViajes() {
     try {
